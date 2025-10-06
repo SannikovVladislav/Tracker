@@ -13,15 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-            let trackerVC = TrackerViewController()  // Ваш контроллер
-            let navigationController = UINavigationController(rootViewController: trackerVC)
-            
-            window.rootViewController = navigationController
-            window.makeKeyAndVisible()
-            
-            self.window = window
+        guard let windowScene = scene as? UIWindowScene else { return }
+        
+        window = UIWindow(windowScene: windowScene)
+        let tabBarVC = MainTabBarViewController()
+        window?.rootViewController = tabBarVC
+        window?.makeKeyAndVisible()
     }
 }
 
