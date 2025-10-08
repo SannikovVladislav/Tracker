@@ -10,13 +10,15 @@ import UIKit
 class TrackerViewController: UIViewController {
     
     private lazy var trackerAddingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .blackDay
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
-        return button
-    }()
+            let button = UIButton.systemButton(
+                with: UIImage(resource: .trackerAdding),
+                target: self,
+                action: #selector(addTrackersButton)
+            )
+            button.tintColor = .blackDay
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
     
     private lazy var trackersLabel: UILabel = {
         let label = UILabel()
@@ -73,10 +75,11 @@ class TrackerViewController: UIViewController {
         addSubviews()
         configureView()
         setupConstraints()
+        setupBarButtonItem()
     }
     
     func addSubviews() {
-        [trackerAddingButton, trackersLabel, searchField, placeholderStack].forEach { view.addSubview($0) }
+        [trackersLabel, searchField, placeholderStack].forEach { view.addSubview($0) }
     }
     
     private func configureView() {
@@ -84,41 +87,53 @@ class TrackerViewController: UIViewController {
         
     }
     
-    
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            
-            // Add Button
-            trackerAddingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6),
-            trackerAddingButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 45),
-            trackerAddingButton.widthAnchor.constraint(equalToConstant: 42),
-            trackerAddingButton.heightAnchor.constraint(equalToConstant: 42),
-            
-            // Trackers label
-            trackersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            trackersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            
-            // Search Field
-            searchField.heightAnchor.constraint(equalToConstant: 36),
-            searchField.leadingAnchor.constraint(equalTo: trackersLabel.leadingAnchor),
-            searchField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            searchField.topAnchor.constraint(equalTo: trackersLabel.bottomAnchor, constant: 7),
-            
-            //Placeholder Image
-            placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
-            placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
-            
-            // Placeholder stack
-            placeholderStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            placeholderStack.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 220)
-            
-            
-        ])
+    private func setupBarButtonItem() {
+        setupNavigationBarButton()
     }
     
-    @objc private func didTapAddButton() {
-        print("Add button tapped")
+    private func setupNavigationBarButton() {
+            
+            let button = UIBarButtonItem(
+                image: UIImage(resource: .trackerAdding),
+                style: .plain,
+                target: self,
+                action: #selector(addTrackersButton)
+            )
+            button.tintColor = .blackDay
+            
+            navigationItem.leftBarButtonItem = button
+        }
+        
+        func setupConstraints() {
+            NSLayoutConstraint.activate([
+                
+                
+                // Trackers label
+                trackersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                trackersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                
+                // Search Field
+                searchField.heightAnchor.constraint(equalToConstant: 36),
+                searchField.leadingAnchor.constraint(equalTo: trackersLabel.leadingAnchor),
+                searchField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+                searchField.topAnchor.constraint(equalTo: trackersLabel.bottomAnchor, constant: 7),
+                
+                //Placeholder Image
+                placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
+                placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
+                
+                // Placeholder stack
+                placeholderStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                placeholderStack.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 220)
+                
+                
+            ])
+        }
+        
+    @objc private func addTrackersButton() {
+            print("Add button tapped")
+        }
+        
+        
     }
-    
-    
-}
+
