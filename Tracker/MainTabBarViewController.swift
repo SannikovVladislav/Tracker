@@ -12,8 +12,7 @@ final class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         setupTabBarAppearance()
-        setupViewControllers()
-        
+        setupViewControllers()        
     }
     
     private func setupTabBarAppearance() {
