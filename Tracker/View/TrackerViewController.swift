@@ -9,6 +9,17 @@ import UIKit
 
 class TrackerViewController: UIViewController {
     
+    private lazy var datePicker: UIDatePicker = {
+            let picker = UIDatePicker()
+            picker.datePickerMode = .date
+            picker.locale = Locale(identifier: "ru_RU")
+            picker.preferredDatePickerStyle = .automatic
+        picker.backgroundColor = .clear
+        picker.translatesAutoresizingMaskIntoConstraints = false
+            
+            return picker
+        }()
+    
     private lazy var trackerAddingButton: UIButton = {
         let button = UIButton.systemButton(
             with: UIImage(resource: .trackerAdding),
@@ -101,7 +112,10 @@ class TrackerViewController: UIViewController {
         )
         button.tintColor = .blackDay
         
+        let datePickerItem = UIBarButtonItem(customView: datePicker)
+        
         navigationItem.leftBarButtonItem = button
+        navigationItem.rightBarButtonItem = datePickerItem
     }
     
     func setupConstraints() {
