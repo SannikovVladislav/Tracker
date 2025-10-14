@@ -29,7 +29,7 @@ final class MainTabBarViewController: UITabBarController {
     }
     
     private func setupViewControllers() {
-        let trackersVC = TrackerViewController()
+        let trackersVC = TrackersViewController()
         let statisticsVC = StatisticsViewController()
         
         trackersVC.tabBarItem = UITabBarItem(
