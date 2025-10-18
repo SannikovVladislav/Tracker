@@ -173,10 +173,8 @@ class TrackersViewController: UIViewController {
         return categories.compactMap { category in
             let filteredTrackers = category.trackers.filter { tracker in
                 if tracker.schedule.isEmpty {
-                    // Нерегулярные события показываем только для сегодняшней даты
                     return isToday
                 } else {
-                    // Регулярные события показываем по расписанию
                     return tracker.schedule.contains(currentWeekday)
                 }
             }
@@ -235,6 +233,7 @@ class TrackersViewController: UIViewController {
             // Trackers label
             trackersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             trackersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            
             
             // Search Field
             searchField.heightAnchor.constraint(equalToConstant: 36),
