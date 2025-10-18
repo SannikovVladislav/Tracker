@@ -234,7 +234,6 @@ class TrackersViewController: UIViewController {
             trackersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             trackersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             
-            
             // Search Field
             searchField.heightAnchor.constraint(equalToConstant: 36),
             searchField.leadingAnchor.constraint(equalTo: trackersLabel.leadingAnchor),
