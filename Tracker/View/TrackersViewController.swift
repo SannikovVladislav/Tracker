@@ -200,7 +200,6 @@ class TrackersViewController: UIViewController {
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        
     }
     
     private func setupBarButtonItem() {
