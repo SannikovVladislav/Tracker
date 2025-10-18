@@ -25,9 +25,7 @@ class NewHabitViewController: UIViewController {
         textField.delegate = self
         textField.returnKeyType = .done
         textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
+        textField.translatesAutoresizingMaskIntoConstraints = false        
         return textField
     }()
     
@@ -38,11 +36,9 @@ class NewHabitViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
         tableView.clipsToBounds = true
-        //tableView.isScrollEnabled = false
         let layer = tableView.layer
         layer.cornerRadius = 16
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     
@@ -59,7 +55,6 @@ class NewHabitViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     private lazy var createButton: UIButton = {
@@ -73,7 +68,6 @@ class NewHabitViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -81,24 +75,21 @@ class NewHabitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO: тут пока принудительно стоит категория. как в тз нужно будет реализовать, убрать
-       selectedCategory = "Спорт"
+        selectedCategory = "Здоровье❤️"
         setupUI()
         setupTapGesture()
         updateCreateButtonState()
-        
     }
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false // Позволяет одновременно обрабатывать другие тапы
+        tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
     
     private func configureView() {
         view.backgroundColor = .whiteDay
         title = "Новая привычка"
-        
     }
     
     private func setupUI() {
@@ -179,12 +170,11 @@ class NewHabitViewController: UIViewController {
         let newTracker = Tracker(id: UUID(),
                                  name: name,
                                  color: .colorYP.randomElement() ?? .redYP,
-                                 emoji: "🤍",
+                                 emoji: "🫡",
                                  schedule: selectedSchedule)
         delegate?.didCreateTracker(newTracker, categoryTitle: category)
         
         presentingViewController?.presentingViewController?.dismiss(animated: true)
-        //dismiss(animated: true)
     }
     
     @objc private func cancelButtonTapped () {
@@ -215,7 +205,6 @@ extension NewHabitViewController: UITableViewDataSource {
             
             configureScheduleCell(cell)
         }
-        
         return cell
     }
 }
@@ -235,8 +224,6 @@ extension NewHabitViewController: UITableViewDelegate {
 }
 
 extension NewHabitViewController: UITextFieldDelegate {
-    
-    // Скрываем клавиатуру по нажатию на Done
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

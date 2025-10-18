@@ -8,29 +8,18 @@ import UIKit
 
 class TrackerCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - Properties
     private var tracker: Tracker?
     private var trackerId: UUID?
     private var currentDate: Date = Date()
     private var isCompletedToday: Bool = false
     private let calendar: Calendar = {
-    var calendar = Calendar(identifier: .gregorian)
-        calendar.firstWeekday = 2 // Понедельник — первый день недели
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 2
         return calendar
     }()
+    
     var onCompletion: ((UUID, Date, Bool) -> Void)?
     static let identifier = "TrackerCollectionViewCell"
-    
-    //MARK: - UI Elements
-    
-//        private lazy var titleCategoryLabel: UILabel = {
-//            let label = UILabel()
-//            label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
-//            label.textColor = .blackYP
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//
-//            return label
-//        }()
     
     private lazy var cardView: UIView = {
         let view = UIView()
@@ -39,24 +28,21 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     private lazy var emojiBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .backgroundDay
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     private lazy var emojiLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        //label.backgroundColor = .lightWhiteYP
-        //label.layer.cornerRadius = 12
         label.clipsToBounds = true
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -65,17 +51,14 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .whiteDay
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
-    
     
     private lazy var dayCounterLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .blackDay
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -87,7 +70,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -101,15 +83,12 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        
         addSubviews()
         setupConstraints()
-        
     }
     
     private func addSubviews() {
         contentView.addSubview(cardView)
-        //contentView.addSubview(titleCategoryLabel)
         cardView.addSubview(emojiLabel)
         cardView.addSubview(nameLabel)
         contentView.addSubview(dayCounterLabel)
@@ -119,27 +98,20 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            
             //Card View
             cardView.heightAnchor.constraint(equalToConstant: 90),
             cardView.topAnchor.constraint(equalTo: contentView.topAnchor),
             cardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-//            //Title Category Label
-//            titleCategoryLabel.bottomAnchor.constraint(equalTo: cardView.topAnchor, constant: -12),
-//            titleCategoryLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
-            
             //Emoji Background View
             emojiBackgroundView.widthAnchor.constraint(equalToConstant: 24),
-                emojiBackgroundView.heightAnchor.constraint(equalToConstant: 24),
+            emojiBackgroundView.heightAnchor.constraint(equalToConstant: 24),
             emojiBackgroundView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 12),
-                emojiBackgroundView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
-
-            //Emoji Label
-//         emojiLabel.heightAnchor.constraint(equalToConstant: 22),
-//          emojiLabel.widthAnchor.constraint(equalToConstant: 16),
-//            emojiLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 12),
-//            emojiLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
+            emojiBackgroundView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 12),
+            
+            // Emoji Label
             emojiLabel.centerXAnchor.constraint(equalTo: emojiBackgroundView.centerXAnchor),
             emojiLabel.centerYAnchor.constraint(equalTo: emojiBackgroundView.centerYAnchor),
             
@@ -173,7 +145,6 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         nameLabel.text = tracker.name
         dayCounterLabel.text = "\(completedDays) дней"
         cardView.backgroundColor = tracker.color
-        
         updateButtonAppearance(trackerColor: tracker.color)
     }
     
@@ -188,12 +159,12 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         let selectedDate = calendar.startOfDay(for: currentDate)
         
         guard let trackerId = trackerId,
-        let tracker = tracker else { return }
+              let tracker = tracker else { return }
         
         if tracker.schedule.isEmpty {
             guard calendar.isDate(selectedDate, inSameDayAs: today) else { return }
-                } else {
-                    guard selectedDate <= today else { return }
+        } else {
+            guard selectedDate <= today else { return }
         }
         isCompletedToday.toggle()
         updateButtonAppearance(trackerColor: cardView.backgroundColor ?? .color5)

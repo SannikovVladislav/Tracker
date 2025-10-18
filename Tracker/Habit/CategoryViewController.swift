@@ -11,12 +11,9 @@ protocol CategorySelectionDelegate: AnyObject {
 }
 
 class CategoryViewController: UIViewController {
-    //private var selectedCategory: String?
     weak var delegate: CategorySelectionDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 }
 

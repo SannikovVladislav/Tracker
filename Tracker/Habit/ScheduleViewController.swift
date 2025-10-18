@@ -24,8 +24,7 @@ class ScheduleViewController: UIViewController {
         tableView.clipsToBounds = true
         tableView.isScrollEnabled = false
         tableView.layer.cornerRadius = 16
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        tableView.translatesAutoresizingMaskIntoConstraints = false        
         return tableView
     }()
     
@@ -40,7 +39,6 @@ class ScheduleViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -54,14 +52,12 @@ class ScheduleViewController: UIViewController {
     private func configureView() {
         view.backgroundColor = .whiteDay
         title = "Расписание"
-        
     }
     
     private func setupUI() {
         configureView()
         addSubviews()
         setupConstraints()
-        
     }
     
     func addSubviews() {
@@ -112,7 +108,6 @@ extension ScheduleViewController: UITableViewDataSource {
         switchView.isOn = selectedDays.contains(weekday)
         switchView.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         cell.accessoryView = switchView
-        
         return cell
     }
     

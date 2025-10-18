@@ -14,7 +14,6 @@ final class StatisticsViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.textColor = .blackDay
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -22,21 +21,17 @@ final class StatisticsViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-
     }
     
     private func setupUI() {
         configureView()
         view.addSubview(statisticsLabel)
         setupConstraints()
-        
     }
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        
     }
-    
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([

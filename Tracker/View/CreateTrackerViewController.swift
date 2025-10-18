@@ -26,7 +26,6 @@ class CreateTrackerViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -41,7 +40,6 @@ class CreateTrackerViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         button.contentVerticalAlignment = .center
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     
@@ -61,14 +59,12 @@ class CreateTrackerViewController: UIViewController {
     }
     
     @objc func irregularEventButtonTapped() {
-        
     }
     
     private func setupUI() {
         configureView()
         addSubviews()
         setupConstraints()
-        
     }
     
     func addSubviews() {
@@ -77,13 +73,13 @@ class CreateTrackerViewController: UIViewController {
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        title = "Создание трекера"
-        
+        title = "Создание трекера"        
     }
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
+            
             // Habit Button
             habitButton.heightAnchor.constraint(equalToConstant: 60),
             habitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 281),

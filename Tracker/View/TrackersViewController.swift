@@ -18,6 +18,7 @@ class TrackersViewController: UIViewController {
         calendar.firstWeekday = 2 // Понедельник — первый день недели
         return calendar
     }()
+    private var trackerAddingButton: UIButton!
     private var currentDate = Date()
     private var visibleCategories: [TrackerCategory] = []
     private var categories: [TrackerCategory] = [] {
@@ -33,7 +34,6 @@ class TrackersViewController: UIViewController {
         }
     }
     
-    private var trackerAddingButton: UIButton!
     
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -132,19 +132,15 @@ class TrackersViewController: UIViewController {
         return shifted <= 0 ? shifted + 7 : shifted
     }
     
-    
-    
     func toggleCompletion(for trackerID: UUID, date: Date, isCompleted: Bool) {
         let dateStart = calendar.startOfDay(for: date)
         let today = calendar.startOfDay(for: Date())
         
         guard let tracker = (visibleCategories.flatMap { $0.trackers }).first(where: { $0.id == trackerID }) else { return }
         
-        // Для нерегулярных событий разрешаем отметку только на сегодня
         if tracker.schedule.isEmpty {
             guard dateStart == today else { return }
         } else {
-            // Для регулярных событий проверяем день недели и что дата не в будущем
             let dayOfWeek = calendar.component(.weekday, from: date)
             let currentWeekday = Weekday(rawValue: adjustedWeekday(from: dayOfWeek)) ?? .monday
             guard tracker.schedule.contains(currentWeekday) && dateStart <= today else {
@@ -188,15 +184,12 @@ class TrackersViewController: UIViewController {
             TrackerCategory(title: category.title, trackers: filteredTrackers)
         }
     }
-
+    
     private func setupUI() {
         configureView()
         setupBarButtonItem()
         addSubviews()
-        //setupDate()
-        
         setupConstraints()
-        
         visibleCategories = filterTrackers(for: datePicker.date)
         showPlaceholder()
         collectionView.reloadData()
@@ -236,7 +229,7 @@ class TrackersViewController: UIViewController {
         placeholderStack.isHidden = !isEmpty
     }
     
-   private func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             
             // Trackers label
@@ -272,7 +265,6 @@ class TrackersViewController: UIViewController {
         let createTrackerNC = UINavigationController(rootViewController: createTrackerVC)
         createTrackerNC.modalPresentationStyle = .pageSheet
         present(createTrackerNC, animated: true)
-        
     }
     
     @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -280,7 +272,6 @@ class TrackersViewController: UIViewController {
         visibleCategories = filterTrackers(for: currentDate)
         collectionView.reloadData()
         showPlaceholder()
-        // dateTextField.text = formatDate(sender.date)
     }
 }
 
@@ -314,7 +305,6 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.onCompletion = { [weak self] trackerId, date, isCompleted in
             self?.toggleCompletion(for: trackerId, date: date, isCompleted: isCompleted)
         }
-        
         return cell
     }
 }
