@@ -41,11 +41,9 @@ class ScheduleViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -86,7 +84,6 @@ class ScheduleViewController: UIViewController {
         delegate?.didSelectSchedule(sortedDays)
         dismiss(animated: true)
     }
-    
 }
 
 extension ScheduleViewController: UITableViewDataSource {
@@ -123,7 +120,6 @@ extension ScheduleViewController: UITableViewDataSource {
         }
         selectedDays.sort { $0.rawValue < $1.rawValue }
     }
-    
 }
 
 extension ScheduleViewController: UITableViewDelegate {
@@ -133,7 +129,6 @@ extension ScheduleViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // Скрываем разделитель у последней ячейки
         if indexPath.row == Weekday.allCases.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         } else {
