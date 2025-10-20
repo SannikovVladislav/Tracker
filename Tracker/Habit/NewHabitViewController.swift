@@ -57,6 +57,7 @@ class NewHabitViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     private lazy var createButton: UIButton = {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 16
@@ -70,7 +71,6 @@ class NewHabitViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,7 +173,6 @@ class NewHabitViewController: UIViewController {
                                  emoji: "🫡",
                                  schedule: selectedSchedule)
         delegate?.didCreateTracker(newTracker, categoryTitle: category)
-        
         presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     

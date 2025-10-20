@@ -15,7 +15,7 @@ class TrackersViewController: UIViewController {
     
     private let calendar: Calendar = {
         var calendar = Calendar(identifier: .gregorian)
-        calendar.firstWeekday = 2 // Понедельник — первый день недели
+        calendar.firstWeekday = 2
         return calendar
     }()
     private var trackerAddingButton: UIButton!
@@ -33,7 +33,6 @@ class TrackersViewController: UIViewController {
             collectionView.reloadData()
         }
     }
-    
     
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -58,7 +57,6 @@ class TrackersViewController: UIViewController {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Поиск"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        
         return searchBar
     }()
     
@@ -66,7 +64,6 @@ class TrackersViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .trackerPlaceholder)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         return imageView
     }()
     
@@ -76,7 +73,6 @@ class TrackersViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .blackDay
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -86,7 +82,6 @@ class TrackersViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
     
@@ -102,7 +97,6 @@ class TrackersViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         return collectionView
     }()
     
@@ -127,7 +121,7 @@ class TrackersViewController: UIViewController {
     }
     
     private func adjustedWeekday(from calendarWeekday: Int) -> Int {
-        let firstWeekday = calendar.firstWeekday // 2 — понедельник
+        let firstWeekday = calendar.firstWeekday
         let shifted = calendarWeekday - firstWeekday + 1
         return shifted <= 0 ? shifted + 7 : shifted
     }
@@ -160,7 +154,6 @@ class TrackersViewController: UIViewController {
                 $0.trackerId == trackerID && calendar.isDate($0.date, inSameDayAs: dateStart)
             }
         }
-        
         collectionView.reloadData()
     }
     
@@ -191,7 +184,6 @@ class TrackersViewController: UIViewController {
         visibleCategories = filterTrackers(for: datePicker.date)
         showPlaceholder()
         collectionView.reloadData()
-        
     }
     
     func addSubviews() {
@@ -200,7 +192,6 @@ class TrackersViewController: UIViewController {
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        
     }
     
     private func setupBarButtonItem() {
