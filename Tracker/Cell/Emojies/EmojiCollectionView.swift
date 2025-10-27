@@ -31,7 +31,6 @@ final class EmojiCollectionView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
         return collectionView
     }()
     
@@ -60,6 +59,7 @@ final class EmojiCollectionView: UIView {
         collectionView.reloadData()
     }
 }
+
 extension EmojiCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         Emojies.emojiesCollection.count
@@ -83,12 +83,10 @@ extension EmojiCollectionView: UICollectionViewDelegate {
                 previousCell.configure(with: Emojies.emojiesCollection[previousIndexPath.row], isSelected: false)
             }
         }
-        
         selectedIndexPath = indexPath
         if let cell = collectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell {
             cell.configure(with: Emojies.emojiesCollection[indexPath.row], isSelected: true)
         }
-        
         delegate?.didSelectEmoji(Emojies.emojiesCollection[indexPath.row])
     }
 }
