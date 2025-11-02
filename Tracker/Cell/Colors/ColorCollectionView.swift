@@ -12,7 +12,7 @@ protocol ColorSelectionDelegate: AnyObject {
 }
 
 final class ColorCollectionView: UIView {
-    private var selectedIndexPath: IndexPath?
+    private let colors: [UIColor] = [.color1, .color2, .color3, .color4, .color5, .color6, .color7, .color8, .color9, .color10, .color11, .color12, .color13, .color14, .color15, .color16, .color17, .color18]
     weak var delegate: ColorSelectionDelegate?
     
     
@@ -56,14 +56,14 @@ final class ColorCollectionView: UIView {
 
 extension ColorCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        UIColor.colorYP.count
+        colors.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCell", for: indexPath) as? ColorCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: UIColor.colorYP[indexPath.row])
+        cell.configure(with: colors[indexPath.row])
         return cell
     }
 }
@@ -76,6 +76,6 @@ extension ColorCollectionView: UICollectionViewDelegate {
                 cell.isSelected = false
             }
         }
-        delegate?.didSelectColor(UIColor.colorYP[indexPath.row])
+        delegate?.didSelectColor(colors[indexPath.row])
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by Владислав on 25.10.2025.
 //
-
 import UIKit
 
 protocol EmojiSelectionDelegate: AnyObject {
@@ -12,9 +11,9 @@ protocol EmojiSelectionDelegate: AnyObject {
 }
 
 final class EmojiCollectionView: UIView {
-    private var selectedIndexPath: IndexPath?
+    private let emoji = [ "🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝", "😪"]
     weak var delegate: EmojiSelectionDelegate?
-    
+
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -31,62 +30,52 @@ final class EmojiCollectionView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         return collectionView
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-    }
+           super.init(frame: frame)
+           setupViews()
+       }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 204)
-        ])
-    }
-    
-    func resetSelection() {
-        selectedIndexPath = nil
-        collectionView.reloadData()
-    }
-}
-
-extension EmojiCollectionView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Emojies.emojiesCollection.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath) as? EmojiCollectionViewCell else {
-            return UICollectionViewCell()
+       private func setupViews() {
+           addSubview(collectionView)
+           NSLayoutConstraint.activate([
+               collectionView.topAnchor.constraint(equalTo: topAnchor),
+               collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+               collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+               collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+               collectionView.heightAnchor.constraint(equalToConstant: 204)
+           ])
+       }
+   }
+    extension EmojiCollectionView: UICollectionViewDataSource {
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            emoji.count
         }
-        let emoji = Emojies.emojiesCollection[indexPath.row]
-        let isSelected = indexPath == selectedIndexPath
-        cell.configure(with: emoji, isSelected: isSelected)
-        return cell
-    }
-}
-
-extension EmojiCollectionView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let previousIndexPath = selectedIndexPath {
-            if let previousCell = collectionView.cellForItem(at: previousIndexPath) as? EmojiCollectionViewCell {
-                previousCell.configure(with: Emojies.emojiesCollection[previousIndexPath.row], isSelected: false)
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath) as? EmojiCollectionViewCell else {
+                return UICollectionViewCell()
             }
+            cell.configure(with: emoji[indexPath.row])
+            return cell
         }
-        selectedIndexPath = indexPath
-        if let cell = collectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell {
-            cell.configure(with: Emojies.emojiesCollection[indexPath.row], isSelected: true)
-        }
-        delegate?.didSelectEmoji(Emojies.emojiesCollection[indexPath.row])
     }
-}
+    
+    extension EmojiCollectionView: UICollectionViewDelegate {
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            for selectedIndex in collectionView.indexPathsForSelectedItems ?? [] where selectedIndex != indexPath {
+                        collectionView.deselectItem(at: selectedIndex, animated: false)
+                        if let cell = collectionView.cellForItem(at: selectedIndex) as? EmojiCollectionViewCell {
+                            cell.isSelected = false
+                        }
+                    }
+                    delegate?.didSelectEmoji(emoji[indexPath.row])
+        }
+    }
