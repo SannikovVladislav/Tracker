@@ -104,102 +104,99 @@ final class TrackerCategoryStore: NSObject {
         }
         try saveContext()
     }
-        
-        func updateCategory(_ trackerCategoryCoreData: TrackerCategoryCoreData, with category: TrackerCategory)  {
-            trackerCategoryCoreData.title = category.title
-        }
-        
-        func deleteCategory(with title: String) throws {
-            let request = TrackerCategoryCoreData.fetchRequest()
-            request.predicate = NSPredicate(format: "title == %@", title)
-            
-            if let category = try context.fetch(request).first {
-                context.delete(category)
-                try saveContext()
-            }
-        }
-        
-        func fetchCategory(with title: String) throws -> TrackerCategory? {
-            let request = TrackerCategoryCoreData.fetchRequest()
-            request.predicate = NSPredicate(format: "title == %@", title)
-            
-            if let categoryCoreData = try context.fetch(request).first {
-                return try decodeTrackerCategory(from: categoryCoreData)
-            }
-            return nil
-        }
-        
-        func fetchAllCategories() throws -> [TrackerCategory] {
-            guard let categories = fetchedResultsController.fetchedObjects else {
-                throw TrackerCategoryStoreError.fetchError(NSError(domain: "", code: -1))
-            }
-            return try categories.map { try decodeTrackerCategory(from: $0)}
-        }
-        
-        func saveContext() throws {
-            guard context.hasChanges else { return }
-            
-            do {
-                try context.save()
-            } catch {
-                context.rollback()
-                throw TrackerCategoryStoreError.saveError(error)
-            }
-        }
-        
-        func decodeTrackerCategory(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
-            guard let title = trackerCategoryCoreData.title else {
-                throw TrackerCategoryStoreError.decodingErrorInvalidTitle
-            }
-            
-            var trackers: [Tracker] = []
-            if let trackerCoreDataSet = trackerCategoryCoreData.trackers as? Set<TrackerCoreData> {
-                trackers = trackerCoreDataSet.compactMap { trackerCoreData in
-                    do {
-                        return try decodeTracker(from: trackerCoreData)
-                    } catch {
-                        print("Ошибка декодирования трекера: \(error)")
-                        return nil
-                    }
-                }
-            }
-            
-            return TrackerCategory(
-                title: title,
-                trackers: trackers
-            )
-        }
     
-
-        func decodeTracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
-            guard let id = trackerCoreData.id,
-                  let name = trackerCoreData.name,
-                  let colorHex = trackerCoreData.colorHex,
-                  let emoji = trackerCoreData.emoji else {
-                throw TrackerCategoryStoreError.decodingErrorInvalidTrackers
-            }
-            
-            let color = colorHex.color
-            
-            var schedule: [Weekday] = []
-            if let scheduleData = trackerCoreData.schedule {
-                do {
-                    schedule = try JSONDecoder().decode([Weekday].self, from: scheduleData)
-                } catch {
-                    print("Ошибка декодирования расписания: \(error)")
-                    throw TrackerCategoryStoreError.decodingErrorInvalidTrackers
-                }
-            }
-            
-            return Tracker(
-                id: id,
-                name: name,
-                color: color,
-                emoji: emoji,
-                schedule: schedule
-            )
+    func updateCategory(_ trackerCategoryCoreData: TrackerCategoryCoreData, with category: TrackerCategory)  {
+        trackerCategoryCoreData.title = category.title
+    }
+    
+    func deleteCategory(with title: String) throws {
+        let request = TrackerCategoryCoreData.fetchRequest()
+        request.predicate = NSPredicate(format: "title == %@", title)
+        
+        if let category = try context.fetch(request).first {
+            context.delete(category)
+            try saveContext()
         }
     }
+    
+    func fetchCategory(with title: String) throws -> TrackerCategory? {
+        let request = TrackerCategoryCoreData.fetchRequest()
+        request.predicate = NSPredicate(format: "title == %@", title)
+        
+        if let categoryCoreData = try context.fetch(request).first {
+            return try decodeTrackerCategory(from: categoryCoreData)
+        }
+        return nil
+    }
+    
+    func fetchAllCategories() throws -> [TrackerCategory] {
+        guard let categories = fetchedResultsController.fetchedObjects else {
+            throw TrackerCategoryStoreError.fetchError(NSError(domain: "", code: -1))
+        }
+        return try categories.map { try decodeTrackerCategory(from: $0)}
+    }
+    
+    func saveContext() throws {
+        guard context.hasChanges else { return }
+        
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw TrackerCategoryStoreError.saveError(error)
+        }
+    }
+    
+    func decodeTrackerCategory(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
+        guard let title = trackerCategoryCoreData.title else {
+            throw TrackerCategoryStoreError.decodingErrorInvalidTitle
+        }
+        
+        var trackers: [Tracker] = []
+        if let trackerCoreDataSet = trackerCategoryCoreData.trackers as? Set<TrackerCoreData> {
+            trackers = trackerCoreDataSet.compactMap { trackerCoreData in
+                do {
+                    return try decodeTracker(from: trackerCoreData)
+                } catch {
+                    print("Ошибка декодирования трекера: \(error)")
+                    return nil
+                }
+            }
+        }
+        return TrackerCategory(
+            title: title,
+            trackers: trackers
+        )
+    }
+        
+    func decodeTracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
+        guard let id = trackerCoreData.id,
+              let name = trackerCoreData.name,
+              let colorHex = trackerCoreData.colorHex,
+              let emoji = trackerCoreData.emoji else {
+            throw TrackerCategoryStoreError.decodingErrorInvalidTrackers
+        }
+        
+        let color = colorHex.color
+        
+        var schedule: [Weekday] = []
+        if let scheduleData = trackerCoreData.schedule {
+            do {
+                schedule = try JSONDecoder().decode([Weekday].self, from: scheduleData)
+            } catch {
+                print("Ошибка декодирования расписания: \(error)")
+                throw TrackerCategoryStoreError.decodingErrorInvalidTrackers
+            }
+        }
+        return Tracker(
+            id: id,
+            name: name,
+            color: color,
+            emoji: emoji,
+            schedule: schedule
+        )
+    }
+}
 
 extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -215,8 +212,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
               let updatedIndexes = updatedIndexes,
               let movedIndexes = movedIndexes else {
             return
-        }
-        
+        }        
         delegate?.store(
             self,
             didUpdate: TrackerCategoryStoreUpdate(

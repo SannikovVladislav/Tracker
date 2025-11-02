@@ -247,8 +247,8 @@ class NewHabitViewController: UIViewController {
     @objc private func createButtonTapped () {
         guard let name = nameTrackerTextField.text, !name.isEmpty,
               let category = selectedCategory, !selectedSchedule.isEmpty,
-        let emoji = selectedEmoji,
-            let color = selectedColor else { return }
+              let emoji = selectedEmoji,
+              let color = selectedColor else { return }
         
         let newTracker = Tracker(id: UUID(),
                                  name: name,

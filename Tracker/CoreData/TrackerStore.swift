@@ -37,7 +37,6 @@ protocol TrackerStoreDelegate: AnyObject {
 }
 
 final class TrackerStore: NSObject {
-    //private let uiColorMarshalling = UIColorMarshalling()
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCoreData>!
     
@@ -66,7 +65,6 @@ final class TrackerStore: NSObject {
     }
     
     private func setupFetchedResultsController() {
-        
         let fetchRequest = TrackerCoreData.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: "name", ascending: true)
@@ -93,19 +91,11 @@ final class TrackerStore: NSObject {
         guard let category = try context.fetch(categoryRequest).first else {
             throw TrackerStoreError.fetchError(NSError(domain: "TrackerStore", code: -1, userInfo: [NSLocalizedDescriptionKey: "Категория не найдена"]))
         }
-        
-        // Создаем трекер
         let trackerCoreData = TrackerCoreData(context: context)
         updateTracker(trackerCoreData, with: tracker)
-        
-        // Связываем трекер с категорией
         trackerCoreData.category = category
         
         try saveContext()
-//        let trackerCoreData = TrackerCoreData(context: context)
-//        updateTracker(trackerCoreData, with: tracker)
-//
-//        try saveContext()
     }
     
     func updateTracker(_ trackerCoreData: TrackerCoreData, with tracker: Tracker)  {
@@ -116,12 +106,12 @@ final class TrackerStore: NSObject {
         trackerCoreData.emoji = tracker.emoji
         
         do {
-                let scheduleData = try JSONEncoder().encode(tracker.schedule)
-                trackerCoreData.schedule = scheduleData
-            } catch {
-                print("Ошибка кодирования расписания: \(error)")
-                trackerCoreData.schedule = nil
-            }
+            let scheduleData = try JSONEncoder().encode(tracker.schedule)
+            trackerCoreData.schedule = scheduleData
+        } catch {
+            print("Ошибка кодирования расписания: \(error)")
+            trackerCoreData.schedule = nil
+        }
     }
     
     func deleteTracker(with id: UUID) throws {
@@ -133,6 +123,7 @@ final class TrackerStore: NSObject {
             try saveContext()
         }
     }
+    
     func fetchTracker(with id: UUID) throws -> Tracker {
         let request = TrackerCoreData.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
@@ -195,7 +186,6 @@ final class TrackerStore: NSObject {
             schedule: schedule
         )
     }
-    
 }
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {

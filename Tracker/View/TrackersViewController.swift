@@ -125,8 +125,6 @@ class TrackersViewController: UIViewController {
         addSubviews()
         setupUI()
         loadInitialData()
-        
-        
     }
     
     private func loadInitialData() {
