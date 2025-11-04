@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class ColorCollectionViewCell: UICollectionViewCell {
+final class ColorCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ColorCell"
     
