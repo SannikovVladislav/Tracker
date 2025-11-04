@@ -41,7 +41,7 @@ class ScheduleViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()

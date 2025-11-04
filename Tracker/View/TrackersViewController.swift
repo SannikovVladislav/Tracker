@@ -23,6 +23,7 @@ class TrackersViewController: UIViewController {
     private var visibleCategories: [TrackerCategory] = []
     private var categories: [TrackerCategory] = [] {
         didSet {
+            visibleCategories = filterTrackers(for: datePicker.date)
             showPlaceholder()
             collectionView.reloadData()
         }
@@ -33,6 +34,24 @@ class TrackersViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
+    private lazy var trackerStore: TrackerStore = {
+        let store = TrackerStore()
+        store.delegate = self
+        return store
+    }()
+    
+    private lazy var trackerRecordStore: TrackerRecordStore =  {
+        let store = TrackerRecordStore()
+        store.delegate = self
+        return store
+    }()
+    
+    private lazy var trackerCategoryStore: TrackerCategoryStore = {
+        let store = TrackerCategoryStore()
+        store.delegate = self
+        return store
+    }()
     
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -105,6 +124,19 @@ class TrackersViewController: UIViewController {
         datePicker.date = Date()
         addSubviews()
         setupUI()
+        loadInitialData()
+    }
+    
+    private func loadInitialData() {
+        do {
+            categories = try trackerCategoryStore.fetchAllCategories()
+            completedTrackers = try trackerRecordStore.fetchAllTrackerRecords()
+            visibleCategories = filterTrackers(for: datePicker.date)
+            collectionView.reloadData()
+            showPlaceholder()
+        } catch {
+            print("Error loading data: \(error)")
+        }
     }
     
     func addTrackerCategory(_ tracker: Tracker, to categoryTitle: String) {
@@ -141,20 +173,16 @@ class TrackersViewController: UIViewController {
                 return
             }
         }
-        
-        if isCompleted {
-            let record = TrackerRecord(trackerId: trackerID, date: dateStart)
-            if !completedTrackers.contains(where: {
-                $0.trackerId == trackerID && calendar.isDate($0.date, inSameDayAs: dateStart)
-            }) {
-                completedTrackers.append(record)
+        do {
+            if isCompleted {
+                let record = TrackerRecord(trackerId: trackerID, date: dateStart)
+                try trackerRecordStore.addTrackerRecord(record)
+            } else {
+                try trackerRecordStore.deleteTracker(with: trackerID, date: dateStart)
             }
-        } else {
-            completedTrackers.removeAll {
-                $0.trackerId == trackerID && calendar.isDate($0.date, inSameDayAs: dateStart)
-            }
+        } catch {
+            print("Error toggling completion: \(error)")
         }
-        collectionView.reloadData()
     }
     
     private func filterTrackers(for date: Date) -> [TrackerCategory] {
@@ -317,10 +345,41 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 
 extension TrackersViewController: CreateTrackerViewControllerDelegate {
     func didCreateTracker(_ tracker: Tracker, categoryTitle: String) {
-        addTrackerCategory(tracker, to: categoryTitle)
-        visibleCategories = filterTrackers(for: datePicker.date)
-        collectionView.reloadData()
-        showPlaceholder()
-        dismiss(animated: true)
+        do {
+            if let _ = try trackerCategoryStore.fetchCategory(with: categoryTitle) {
+                try trackerStore.addTracker(tracker, categoryTitle: categoryTitle)
+            } else {
+                let newCategory = TrackerCategory(title: categoryTitle, trackers: [tracker])
+                try trackerCategoryStore.addCategory(newCategory)
+            }
+            loadInitialData()
+            dismiss(animated: true)
+        } catch {
+            print("Error creating tracker: \(error)")
+        }
+    }
+}
+
+extension TrackersViewController: TrackerStoreDelegate {
+    func store(_ store: TrackerStore, didUpdate update: TrackerStoreUpdate) {
+        loadInitialData()
+    }
+}
+
+extension TrackersViewController: TrackerRecordStoreDelegate {
+    func store(_ store: TrackerRecordStore, didUpdate update: TrackerRecordStoreUpdate) {
+        do {
+            completedTrackers = try trackerRecordStore.fetchAllTrackerRecords()
+            collectionView.reloadData()
+            print("Записей после обновления: \(completedTrackers.count)")
+        } catch {
+            print("Error loading records: \(error)")
+        }
+    }
+}
+
+extension TrackersViewController: TrackerCategoryStoreDelegate {
+    func store(_ store: TrackerCategoryStore, didUpdate update: TrackerCategoryStoreUpdate) {
+        loadInitialData()
     }
 }
