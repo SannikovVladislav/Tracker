@@ -34,8 +34,8 @@ final class BlueOnboardingViewController: UIViewController {
         button.setTitle("Вот это технологии!", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.titleLabel?.textColor = .whiteDay
-        button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -67,6 +67,20 @@ final class BlueOnboardingViewController: UIViewController {
             label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
             
         ])
+    }
+    @objc private func skipButtonTapped(){
+        finishOnboarding()
+    }
+    
+    private func finishOnboarding() {
+        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
+        
+        let tabBarController = MainTabBarViewController()
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return }
+        window.rootViewController = tabBarController
     }
     
     

@@ -36,6 +36,7 @@ final class RedOnboardingViewController: UIViewController {
         button.titleLabel?.textColor = .whiteDay
         button.layer.masksToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -68,7 +69,20 @@ final class RedOnboardingViewController: UIViewController {
             
         ])
     }
+    @objc private func skipButtonTapped(){
+        finishOnboarding()
+    }
     
+    private func finishOnboarding() {
+        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
+        
+        let tabBarController = MainTabBarViewController()
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return }
+        window.rootViewController = tabBarController
+    }
     
 }
 

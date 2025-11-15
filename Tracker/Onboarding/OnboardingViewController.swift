@@ -24,6 +24,14 @@ final class OnboardingViewController: UIPageViewController {
         return [bluePage, redPage]
     }()
     
+    init() {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +53,7 @@ final class OnboardingViewController: UIPageViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
 }
 
 extension OnboardingViewController: UIPageViewControllerDataSource {
