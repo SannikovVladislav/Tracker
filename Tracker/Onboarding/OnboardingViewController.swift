@@ -53,45 +53,42 @@ final class OnboardingViewController: UIPageViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
-    
 }
 
 extension OnboardingViewController: UIPageViewControllerDataSource {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-            guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
-            
-            let previousIndex: Int
-            if viewControllerIndex == 0 {
-                previousIndex = pages.count - 1
-            } else {
-                previousIndex = viewControllerIndex - 1
-            }
-            
-            return pages[previousIndex]
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
+        
+        let previousIndex: Int
+        if viewControllerIndex == 0 {
+            previousIndex = pages.count - 1
+        } else {
+            previousIndex = viewControllerIndex - 1
         }
+        return pages[previousIndex]
+    }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-            guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
-            
-            let nextIndex: Int
-            if viewControllerIndex == pages.count - 1 {
-                nextIndex = 0
-            } else {
-                nextIndex = viewControllerIndex + 1
-            }
-            
-            return pages[nextIndex]
+        guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
+        
+        let nextIndex: Int
+        if viewControllerIndex == pages.count - 1 {
+            nextIndex = 0
+        } else {
+            nextIndex = viewControllerIndex + 1
         }
+        return pages[nextIndex]
+    }
 }
 
 extension OnboardingViewController: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-            if let currentViewController = pageViewController.viewControllers?.first,
-               let currentIndex = pages.firstIndex(of: currentViewController) {
-                pageControl.currentPage = currentIndex
-            }
+        if let currentViewController = pageViewController.viewControllers?.first,
+           let currentIndex = pages.firstIndex(of: currentViewController) {
+            pageControl.currentPage = currentIndex
         }
+    }
 }
 
-#Preview {OnboardingViewController()}
+//#Preview {OnboardingViewController()}

@@ -42,14 +42,12 @@ final class BlueOnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
     }
     
     private func setupUI() {
         view.addSubview(backgroundImage)
         view.addSubview(label)
         view.addSubview(button)
-        
         
         NSLayoutConstraint.activate([
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
@@ -82,8 +80,6 @@ final class BlueOnboardingViewController: UIViewController {
             return }
         window.rootViewController = tabBarController
     }
-    
-    
 }
 
-#Preview {BlueOnboardingViewController()}
+//#Preview {BlueOnboardingViewController()}

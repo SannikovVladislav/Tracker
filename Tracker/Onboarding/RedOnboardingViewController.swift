@@ -42,16 +42,14 @@ final class RedOnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        
+        setupUI()        
     }
     
     private func setupUI() {
         view.addSubview(backgroundImage)
         view.addSubview(label)
         view.addSubview(button)
-        
-        
+                
         NSLayoutConstraint.activate([
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -83,8 +81,7 @@ final class RedOnboardingViewController: UIViewController {
             return }
         window.rootViewController = tabBarController
     }
-    
 }
 
-#Preview {RedOnboardingViewController()}
+//#Preview {RedOnboardingViewController()}
 

@@ -118,11 +118,10 @@ class NewHabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        selectedCategory = "Здоровье❤️"
         setupUI()
         setupTapGesture()
         updateCreateButtonState()
+        categoryAndScheduleTableView.reloadData()
     }
     
     private func setupTapGesture() {
@@ -214,6 +213,7 @@ class NewHabitViewController: UIViewController {
     private func categoryButtonTapped() {
         let categoryVC = CategoryViewController()
         categoryVC.delegate = self
+        categoryVC.selectedCategory = selectedCategory
         let categoryNC = UINavigationController(rootViewController: categoryVC)
         categoryNC.modalPresentationStyle = .pageSheet
         present(categoryNC, animated: true)
@@ -282,6 +282,7 @@ extension NewHabitViewController: UITableViewDataSource {
         
         if indexPath.row == 0 {
             cell.textLabel?.text = "Категория"
+            configureCategoryCell(cell)
         } else {
             cell.textLabel?.text = "Расписание"
             
@@ -344,7 +345,24 @@ extension NewHabitViewController: CategorySelectionDelegate {
     func didSelectCategory(_ category: String) {
         selectedCategory = category
         categoryAndScheduleTableView.reloadData()
+        
+        if let cell = categoryAndScheduleTableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
+            configureCategoryCell(cell)
+        }
         updateCreateButtonState()
+    }
+    
+    func configureCategoryCell(_ cell: UITableViewCell) {
+        cell.textLabel?.text = "Категория"
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
+        cell.detailTextLabel?.textColor = .grayYP
+        
+        if let selectedCategory = selectedCategory, !selectedCategory.isEmpty {
+            cell.detailTextLabel?.text = selectedCategory
+        } else {
+            cell.detailTextLabel?.text = nil
+            
+        }
     }
 }
 
