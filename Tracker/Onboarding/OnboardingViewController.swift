@@ -8,7 +8,7 @@ import UIKit
 
 final class OnboardingViewController: UIPageViewController {
     
-    lazy var pageControl: UIPageControl = {
+   private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pages.count
         pageControl.currentPage = 0
@@ -18,7 +18,7 @@ final class OnboardingViewController: UIPageViewController {
         return pageControl
     }()
     
-    lazy var pages: [UIViewController] = {
+    private lazy var pages: [UIViewController] = {
         let bluePage = BlueOnboardingViewController()
         let redPage = RedOnboardingViewController()
         return [bluePage, redPage]

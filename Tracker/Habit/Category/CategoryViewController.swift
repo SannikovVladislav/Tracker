@@ -15,8 +15,18 @@ final class CategoryViewController: UIViewController {
     weak var delegate: CategorySelectionDelegate?
     weak var createDelegate: CreateCategoryControllerDelegate?
     weak var editDelegate: EditCategoryControllerDelegate?
-    private let viewModel = CategoryViewModel()
     var selectedCategory: String?
+    
+    private var viewModel: CategoryViewModel
+    
+    init(viewModel: CategoryViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private lazy var placeholderImageView: UIImageView = {
         let imageView = UIImageView()
@@ -204,7 +214,7 @@ extension CategoryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        75
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -265,7 +275,7 @@ extension CategoryViewController: CreateCategoryControllerDelegate {
         categoryTableView.reloadData()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.delegate?.didSelectCategory(categoryTitle)
             
             if self.navigationController != nil {

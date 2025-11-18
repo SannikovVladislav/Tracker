@@ -211,7 +211,7 @@ class NewHabitViewController: UIViewController {
     }
     
     private func categoryButtonTapped() {
-        let categoryVC = CategoryViewController()
+        let categoryVC = CategoryViewController(viewModel: CategoryViewModel())
         categoryVC.delegate = self
         categoryVC.selectedCategory = selectedCategory
         let categoryNC = UINavigationController(rootViewController: categoryVC)
