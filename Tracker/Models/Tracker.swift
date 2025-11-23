@@ -19,25 +19,25 @@ enum Weekday: Int, CaseIterable, Codable {
     
     var fullName: String {
         switch self {
-        case .sunday: "Воскресенье"
-        case .monday: "Понедельник"
-        case .tuesday: "Вторник"
-        case .wednesday: "Среда"
-        case .thursday: "Четверг"
-        case .friday: "Пятница"
-        case .saturday: "Суббота"
+        case .sunday: LocalizedStrings.sundayFull
+        case .monday: LocalizedStrings.mondayFull
+        case .tuesday: LocalizedStrings.tuesdayFull
+        case .wednesday: LocalizedStrings.wednesdayFull
+        case .thursday: LocalizedStrings.thursdayFull
+        case .friday: LocalizedStrings.fridayFull
+        case .saturday: LocalizedStrings.saturdayFull
         }
     }
     
     var shortName: String {
         switch self {
-        case .monday: "Пн"
-        case .tuesday: "Вт"
-        case .wednesday: "Ср"
-        case .thursday: "Чт"
-        case .friday: "Пт"
-        case .saturday: "Сб"
-        case .sunday: "Вс"
+        case .sunday: LocalizedStrings.sundayShort
+        case .monday: LocalizedStrings.mondayShort
+        case .tuesday: LocalizedStrings.tuesdayShort
+        case .wednesday: LocalizedStrings.wednesdayShort
+        case .thursday: LocalizedStrings.thursdayShort
+        case .friday: LocalizedStrings.fridayShort
+        case .saturday: LocalizedStrings.saturdayShort
         }
     }
 }

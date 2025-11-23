@@ -1,0 +1,87 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Владислав on 23.11.2025.
+  
+*/
+// Main
+"trackers" = "Трекеры";
+"new_tracker" = "Создание трекера";
+"new_habit" = "Новая привычка";
+"new_irregular_event" = "Новое нерегулярное событие";
+"cancel" = "Отменить";
+"create" = "Создать";
+"done" = "Готово";
+"confirmDelete" = "Уверены что хотите удалить трекер?";
+"filters" = "Фильтры";
+
+// Categories
+"habit" = "Привычка";
+"irregular_event" = "Нерегулярное событие";
+"no_trackers" = "Что будем отслеживать?";
+"no_search_results" = "Ничего не найдено";
+"search" = "Поиск";
+
+// Tracker properties
+"tracker_placeholder_name" = "Введите название трекера";
+"category" = "Категория";
+"schedule" = "Расписание";
+"emoji" = "Emoji";
+"color" = "Цвет";
+"every_day" = "Каждый день";
+
+//Categories properties
+"category_placeholder" = "Привычки и события можно\nобъединить по смыслу";
+"add_category" = "Добавить категорию";
+"category_textField_placeholder" = "Введите название категории";
+"editing_category" = "Редактирование категории";
+"new_category" = "Новая категория";
+
+// Days of week (full names)
+"sunday_full" = "Воскресенье";
+"monday_full" = "Понедельник";
+"tuesday_full" = "Вторник";
+"wednesday_full" = "Среда";
+"thursday_full" = "Четверг";
+"friday_full" = "Пятница";
+"saturday_full" = "Суббота";
+
+// Days of week (short names)
+"sunday_short" = "Вс";
+"monday_short" = "Пн";
+"tuesday_short" = "Вт";
+"wednesday_short" = "Ср";
+"thursday_short" = "Чт";
+"friday_short" = "Пт";
+"saturday_short" = "Сб";
+
+// Statistics
+"statistics" = "Статистика";
+"completed_trackers" = "Трекеров завершено";
+"statistics_placeholder" = "Анализировать пока нечего";
+"best_streak" = "Лучшая серия";
+"perfect_weeks" = "Идеальные недели";
+"average_value" = "Среднее значение";
+
+
+// Actions
+"complete" = "Завершить";
+"undo_complete" = "Отменить завершение";
+"delete" = "Удалить";
+
+// Errors
+"error" = "Ошибка";
+"edit" = "Редактировать";
+"delete_category_confirmation" = "Эта категория точно не нужна?";
+
+//Edit screen
+"edit_screen_title" = "Редактирование привычки";
+"save" = "Сохранить";
+
+//Filters screen
+"all_trackers" = "Все трекеры";
+"trackers_today" = "Трекеры на сегодня";
+"completed" = "Завершённые";
+"incomplete" = "Не завершённые";
+

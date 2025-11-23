@@ -33,13 +33,13 @@ final class MainTabBarViewController: UITabBarController {
         let statisticsVC = StatisticsViewController()
         
         trackersVC.tabBarItem = UITabBarItem(
-            title: "Трекеры",
+            title: LocalizedStrings.trackers,
             image: UIImage(resource: .trackersIcon),
             tag: 0
         )
         
         statisticsVC.tabBarItem = UITabBarItem(
-            title: "Статистика",
+            title: LocalizedStrings.statistics,
             image: UIImage(resource: .statisticIcon),
             tag: 1
         )

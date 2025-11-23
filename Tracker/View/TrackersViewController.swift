@@ -63,7 +63,7 @@ class TrackersViewController: UIViewController {
     
     private lazy var trackersLabel: UILabel = {
         let label = UILabel()
-        label.text = "Трекеры"
+        label.text = LocalizedStrings.trackers
         label.font = .systemFont(ofSize: 34, weight: .bold)
         label.textColor = .blackDay
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,7 @@ class TrackersViewController: UIViewController {
     private lazy var searchField: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
-        searchBar.placeholder = "Поиск"
+        searchBar.placeholder = LocalizedStrings.search
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
@@ -87,7 +87,7 @@ class TrackersViewController: UIViewController {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Что будем отслеживать?"
+        label.text = LocalizedStrings.noTrackers
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .blackDay
         label.translatesAutoresizingMaskIntoConstraints = false
