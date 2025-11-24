@@ -95,7 +95,7 @@ extension ScheduleViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellSchedule", for: indexPath)
         let weekday = Weekday.allCases[indexPath.row]
         cell.textLabel?.text = weekday.fullName
-        cell.backgroundColor = .lightGrayYP
+        cell.backgroundColor = .backgroundDay
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.textLabel?.textColor = .blackDay
         

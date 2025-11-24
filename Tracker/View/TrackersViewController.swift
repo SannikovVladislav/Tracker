@@ -128,6 +128,14 @@ class TrackersViewController: UIViewController {
         addSubviews()
         setupUI()
         loadInitialData()
+        AnalyticsService.reportMainScreenOpen()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParent {
+            AnalyticsService.reportMainScreenClose()
+        }
     }
     
     private func loadInitialData() {
@@ -280,6 +288,8 @@ class TrackersViewController: UIViewController {
         let createTrackerNC = UINavigationController(rootViewController: createTrackerVC)
         createTrackerNC.modalPresentationStyle = .pageSheet
         present(createTrackerNC, animated: true)
+        
+        AnalyticsService.reportAddTrack()
     }
     
     @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -318,6 +328,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         cell.configure( with: tracker, completedDays: completedDays, isCompletedToday: isCompletedToday, currentDate: selectedDate)
         
         cell.onCompletion = { [weak self] trackerId, date, isCompleted in
+            if isCompleted {
+                AnalyticsService.reportTrackTap()
+            }
             self?.toggleCompletion(for: trackerId, date: date, isCompleted: isCompleted)
         }
         return cell
