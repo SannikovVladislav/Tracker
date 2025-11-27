@@ -114,6 +114,38 @@ final class TrackerStore: NSObject {
         }
     }
     
+    func updateTracker(_ tracker: Tracker, categoryTitle: String) throws {
+        let request = NSFetchRequest<TrackerCoreData>(entityName: "TrackerCoreData")
+        request.predicate = NSPredicate(format: "id == %@", tracker.id as CVarArg)
+        
+        let results = try context.fetch(request)
+        
+        if let trackerToUpdate = results.first {
+            // Обновляем данные трекера
+            trackerToUpdate.name = tracker.name
+            trackerToUpdate.colorHex = tracker.color.hexString
+            trackerToUpdate.emoji = tracker.emoji
+            
+            do {
+                let scheduleData = try JSONEncoder().encode(tracker.schedule)
+                trackerToUpdate.schedule = scheduleData
+            } catch {
+                print("Ошибка кодирования расписания: \(error)")
+            }
+            
+            // Обновляем категорию если нужно
+            let categoryRequest = TrackerCategoryCoreData.fetchRequest()
+            categoryRequest.predicate = NSPredicate(format: "title == %@", categoryTitle)
+            
+            if let newCategory = try context.fetch(categoryRequest).first {
+                trackerToUpdate.category = newCategory
+            }
+            
+            try saveContext()
+        }
+    }
+    
+    
     func deleteTracker(with id: UUID) throws {
         let request = TrackerCoreData.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)

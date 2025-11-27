@@ -51,6 +51,15 @@ final class ColorCollectionView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 204)
         ])
     }
+    
+    func selectColor(_ color: UIColor) {
+            if let index = self.colors.firstIndex(where: { $0.isEqual(color) })  {
+                let indexPath = IndexPath(item: index, section: 0)
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
+                
+                delegate?.didSelectColor(color)
+            }
+        }
 }
 
 extension ColorCollectionView: UICollectionViewDataSource {

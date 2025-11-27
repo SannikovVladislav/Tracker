@@ -16,17 +16,7 @@ final class CategoryViewController: UIViewController {
     weak var createDelegate: CreateCategoryControllerDelegate?
     weak var editDelegate: EditCategoryControllerDelegate?
     var selectedCategory: String?
-    
-    private var viewModel: CategoryViewModel
-    
-    init(viewModel: CategoryViewModel){
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let viewModel = CategoryViewModel()
     
     private lazy var placeholderImageView: UIImageView = {
         let imageView = UIImageView()
