@@ -31,7 +31,7 @@ class NewHabitViewController: UIViewController {
         textField.placeholder = LocalizedStrings.trackerPlaceholderName
         textField.textColor = .blackDay
         textField.tintColor = .grayYP
-        textField.backgroundColor = .lightGrayYP
+        textField.backgroundColor = .lightGrayE6
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.layer.cornerRadius = 16
         textField.leftView = UIView(frame: CGRect (x:16, y: 0, width: 17, height: textField.frame.height))
@@ -138,8 +138,7 @@ class NewHabitViewController: UIViewController {
     private func setupUI() {
         configureView()
         addSubviews()
-        setupConstraints()
-        
+        setupConstraints()        
     }
     
     func addSubviews() {
@@ -149,7 +148,6 @@ class NewHabitViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             // Scroll View
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -275,7 +273,7 @@ extension NewHabitViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.backgroundColor = .lightGrayYP
+        cell.backgroundColor = .backgroundDay
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.textLabel?.textColor = .blackDay
         cell.accessoryType = .disclosureIndicator
@@ -361,7 +359,6 @@ extension NewHabitViewController: CategorySelectionDelegate {
             cell.detailTextLabel?.text = selectedCategory
         } else {
             cell.detailTextLabel?.text = nil
-            
         }
     }
 }

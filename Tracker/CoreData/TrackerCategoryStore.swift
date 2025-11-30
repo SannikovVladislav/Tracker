@@ -168,7 +168,7 @@ final class TrackerCategoryStore: NSObject {
             trackers: trackers
         )
     }
-        
+    
     func decodeTracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
         guard let id = trackerCoreData.id,
               let name = trackerCoreData.name,
@@ -212,7 +212,7 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
               let updatedIndexes = updatedIndexes,
               let movedIndexes = movedIndexes else {
             return
-        }        
+        }
         delegate?.store(
             self,
             didUpdate: TrackerCategoryStoreUpdate(

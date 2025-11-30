@@ -24,7 +24,7 @@ class ScheduleViewController: UIViewController {
         tableView.clipsToBounds = true
         tableView.isScrollEnabled = false
         tableView.layer.cornerRadius = 16
-        tableView.translatesAutoresizingMaskIntoConstraints = false        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     

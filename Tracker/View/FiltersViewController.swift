@@ -26,8 +26,7 @@ final class FiltersViewController: UIViewController {
         tableView.clipsToBounds = true
         tableView.isScrollEnabled = false
         tableView.layer.cornerRadius = 16
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
+        tableView.translatesAutoresizingMaskIntoConstraints = false        
         return tableView
     }()
     
@@ -42,7 +41,6 @@ final class FiltersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -50,20 +48,17 @@ final class FiltersViewController: UIViewController {
         configureView()
         view.addSubview(filtersTableView)
         setupConstraints()
-        
     }
-    
     
     private func configureView() {
         view.backgroundColor = .whiteDay
         title = LocalizedStrings.filters
-        
     }
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            //Category and Schedule TableView
+
             filtersTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             filtersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             filtersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -99,7 +94,6 @@ extension FiltersViewController: UITableViewDataSource {
         } else {
             cell.accessoryView = nil
         }
-        
         return cell
     }
 }

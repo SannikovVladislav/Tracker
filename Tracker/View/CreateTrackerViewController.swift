@@ -44,7 +44,7 @@ class CreateTrackerViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         setupUI()
     }
     
@@ -76,7 +76,6 @@ class CreateTrackerViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             
             habitButton.heightAnchor.constraint(equalToConstant: 60),

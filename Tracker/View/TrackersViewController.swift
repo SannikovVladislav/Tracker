@@ -84,6 +84,7 @@ class TrackersViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = LocalizedStrings.search
+        searchBar.searchTextField.backgroundColor = .lightGray76
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
@@ -228,10 +229,8 @@ class TrackersViewController: UIViewController {
             let filteredTrackers = category.trackers.filter { tracker in
                 let dayFilter: Bool
                 if tracker.schedule.isEmpty {
-                    // Нерегулярные события показываем только для сегодняшней даты
                     dayFilter = isToday
                 } else {
-                    // Регулярные события показываем по расписанию
                     dayFilter = tracker.schedule.contains(currentWeekday)
                 }
                 
@@ -272,7 +271,6 @@ class TrackersViewController: UIViewController {
         visibleCategories = filterTrackers(for: datePicker.date, searchText: searchText)
         showPlaceholder()
         collectionView.reloadData()
-        
         updateFiltersButtonVisibility()
     }
     
@@ -306,14 +304,11 @@ class TrackersViewController: UIViewController {
         
         trackerAddingButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(trackerAddingButton)
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: trackerAddingButton)
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
     }
     
     private func showPlaceholder() {
-       
         let hasVisibleTrackers =  visibleCategories.contains { !$0.trackers.isEmpty }
         let isSearching = !searchText.isEmpty
         
@@ -355,21 +350,21 @@ class TrackersViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-
+            
             trackersLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             trackersLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-
+            
             searchField.heightAnchor.constraint(equalToConstant: 36),
             searchField.leadingAnchor.constraint(equalTo: trackersLabel.leadingAnchor),
             searchField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             searchField.topAnchor.constraint(equalTo: trackersLabel.bottomAnchor, constant: 7),
-
+            
             placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
             placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
-
+            
             placeholderStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             placeholderStack.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 220),
-
+            
             collectionView.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 24),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -381,9 +376,7 @@ class TrackersViewController: UIViewController {
             filtersButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
-    
-    
-    
+
     private func updateFiltersButtonVisibility() {
         let hasTrackersForSelectedDate = categories.contains { category in
             category.trackers.contains { tracker in
@@ -391,7 +384,6 @@ class TrackersViewController: UIViewController {
                 let adjustedDayOfWeek = adjustedWeekday(from: dayOfWeek)
                 let currentWeekday = Weekday(rawValue: adjustedDayOfWeek) ?? .monday
                 let isToday = calendar.isDate(datePicker.date, inSameDayAs: Date())
-                
                 let dayFilter: Bool
                 if tracker.schedule.isEmpty {
                     dayFilter = isToday
@@ -401,7 +393,6 @@ class TrackersViewController: UIViewController {
                 return dayFilter
             }
         }
-        
         filtersButton.isHidden = !hasTrackersForSelectedDate
     }
     
@@ -500,6 +491,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         }
         return UICollectionReusableView()
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 40)
     }
@@ -522,7 +514,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                 AnalyticsService.reportDeleteContext()
                 self?.confirmDeleteTracker(tracker, at: indexPath)}
         return UIMenu(children: [editAction, deleteAction])
-        
     }
     
     private func editTracker(_ tracker: Tracker, at indexPath: IndexPath) {
@@ -542,7 +533,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
     
     private func confirmDeleteTracker(_ tracker: Tracker, at indexPath: IndexPath) {
-    
+        
         let alert = UIAlertController(
             title: nil,
             message: LocalizedStrings.confirmDelete,
@@ -560,12 +551,9 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             title: LocalizedStrings.cancel,
             style: .cancel
         )
-        
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
-        
         present(alert, animated: true)
-        
     }
     
     private func deleteTracker(_ tracker: Tracker, at indexPath: IndexPath) {
@@ -636,11 +624,11 @@ extension TrackersViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.text = ""
-            searchText = ""
-            searchBar.resignFirstResponder()
-            applyFilters()
-        }
+        searchBar.text = ""
+        searchText = ""
+        searchBar.resignFirstResponder()
+        applyFilters()
+    }
 }
 
 extension TrackersViewController: EditTrackerViewControllerDelegate {

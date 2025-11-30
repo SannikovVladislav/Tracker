@@ -121,7 +121,6 @@ final class TrackerStore: NSObject {
         let results = try context.fetch(request)
         
         if let trackerToUpdate = results.first {
-            // Обновляем данные трекера
             trackerToUpdate.name = tracker.name
             trackerToUpdate.colorHex = tracker.color.hexString
             trackerToUpdate.emoji = tracker.emoji
@@ -132,8 +131,6 @@ final class TrackerStore: NSObject {
             } catch {
                 print("Ошибка кодирования расписания: \(error)")
             }
-            
-            // Обновляем категорию если нужно
             let categoryRequest = TrackerCategoryCoreData.fetchRequest()
             categoryRequest.predicate = NSPredicate(format: "title == %@", categoryTitle)
             
@@ -144,8 +141,7 @@ final class TrackerStore: NSObject {
             try saveContext()
         }
     }
-    
-    
+        
     func deleteTracker(with id: UUID) throws {
         let request = TrackerCoreData.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)

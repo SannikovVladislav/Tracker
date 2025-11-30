@@ -10,7 +10,7 @@ import SnapshotTesting
 @testable import Tracker
 
 final class TrackerTests: XCTestCase {
-
+    
     func testTrackersViewControllerLight() {
         let trackersVC = TrackersViewController()
         let trackerNC = UINavigationController(rootViewController: trackersVC)
@@ -32,5 +32,5 @@ final class TrackerTests: XCTestCase {
         
         assertSnapshot(of: trackerNC, as: .image, record: false)
     }
-
+    
 }

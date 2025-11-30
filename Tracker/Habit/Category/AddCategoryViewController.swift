@@ -44,7 +44,7 @@ final class AddCategoryViewController: UIViewController {
         textField.placeholder = LocalizedStrings.categoryTextFieldPlaceholder
         textField.textColor = .blackDay
         textField.tintColor = .grayYP
-        textField.backgroundColor = .lightGrayYP
+        textField.backgroundColor = .lightGray76
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.layer.cornerRadius = 16
         textField.leftView = UIView(frame: CGRect (x:16, y: 0, width: 17, height: textField.frame.height))
@@ -104,8 +104,7 @@ final class AddCategoryViewController: UIViewController {
         doneButton.backgroundColor = doneButton.isEnabled ? .blackDay : .grayYP
     }
     
-    private func setupConstraints() {
-        
+    private func setupConstraints() {        
         NSLayoutConstraint.activate([
             nameCategoryTextField.heightAnchor.constraint(equalToConstant: 75),
             nameCategoryTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),

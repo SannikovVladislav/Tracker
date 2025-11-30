@@ -53,7 +53,7 @@ final class EditTrackerViewController: UIViewController {
         textField.text = tracker.name
         textField.textColor = .blackDay
         textField.tintColor = .grayYP
-        textField.backgroundColor = .backgroundDay
+        textField.backgroundColor = .lightGrayE6
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.layer.cornerRadius = 16
         textField.leftView = UIView(frame: CGRect (x:16, y: 0, width: 17, height: textField.frame.height))
@@ -171,10 +171,10 @@ final class EditTrackerViewController: UIViewController {
         
         if let emoji = selectedEmoji {
             emojiCollectionView.selectEmoji(emoji)
-                }
-                if let color = selectedColor {
-                    colorCollectionView.selectColor(color)
-                }
+        }
+        if let color = selectedColor {
+            colorCollectionView.selectColor(color)
+        }
         updateCreateButtonState()
     }
     
@@ -335,7 +335,7 @@ extension EditTrackerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.backgroundColor = .backgroundDay
+        cell.backgroundColor = .lightGrayE6
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17)
         cell.textLabel?.textColor = .blackDay
         cell.accessoryType = .disclosureIndicator
@@ -345,10 +345,8 @@ extension EditTrackerViewController: UITableViewDataSource {
             configureCategoryCell(cell)
         } else {
             cell.textLabel?.text = LocalizedStrings.schedule
-            
             configureScheduleCell(cell)
         }
-        
         return cell
     }
 }
@@ -368,9 +366,7 @@ extension EditTrackerViewController: UITableViewDelegate {
 }
 
 extension EditTrackerViewController: UITextFieldDelegate {
-    
-    // Скрываем клавиатуру по нажатию на Done
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -412,7 +408,6 @@ extension EditTrackerViewController: CategorySelectionDelegate {
         if let cell = categoryAndScheduleTableView.cellForRow(at: IndexPath(row: 0, section: 0)) {
             configureCategoryCell(cell)
         }
-        
         updateCreateButtonState()
     }
     

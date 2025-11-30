@@ -56,8 +56,7 @@ final class TrackerRecordStore: NSObject {
     
     init(context: NSManagedObjectContext){
         self.context = context
-        super.init()
-        
+        super.init()        
         setupFetchedResultsController()
     }
     
@@ -104,6 +103,7 @@ final class TrackerRecordStore: NSObject {
             try saveContext()
         }
     }
+    
     func fetchTrackerRecord(with trackerId: UUID) throws -> [TrackerRecord] {
         let request = TrackerRecordCoreData.fetchRequest()
         request.predicate = NSPredicate(format: "trackerId == %@", trackerId as CVarArg)
@@ -136,7 +136,7 @@ final class TrackerRecordStore: NSObject {
         }
         guard let date = trackerRecordCoreData.date else {
             throw TrackerRecordStoreError.decodingErrorInvalidDate
-        }        
+        }
         return TrackerRecord(
             trackerId: trackerId,
             date: date

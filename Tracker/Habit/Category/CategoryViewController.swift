@@ -105,10 +105,10 @@ final class CategoryViewController: UIViewController {
         NSLayoutConstraint.activate([
             placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
             placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
-
+            
             placeholderStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             placeholderStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-
+            
             categoryTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             categoryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             categoryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -183,11 +183,9 @@ extension CategoryViewController: UITableViewDataSource {
         cell.layer.maskedCorners = corners
         cell.layer.cornerRadius = !corners.isEmpty ? 16 : 0
         cell.layer.masksToBounds = !corners.isEmpty
-        cell.backgroundColor = .lightGrayYP
+        cell.backgroundColor = .lightGrayE6
     }
-    
 }
-
 
 extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -247,7 +245,7 @@ extension CategoryViewController: UITableViewDelegate {
             }
             
             self?.categoryTableView.reloadData()
-        }        
+        }
         let cancelAction = UIAlertAction(title: LocalizedStrings.cancel, style: .cancel)
         
         alertController.addAction(deleteAction)

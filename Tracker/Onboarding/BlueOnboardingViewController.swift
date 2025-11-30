@@ -20,7 +20,7 @@ final class BlueOnboardingViewController: UIViewController {
         let label = UILabel()
         label.text = "Отслеживайте только то, что хотите"
         label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.textColor = .blackDay
+        label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ final class BlueOnboardingViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.setTitle("Вот это технологии!", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.titleLabel?.textColor = .whiteDay
+        button.setTitleColor(.whiteDay, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
         return button

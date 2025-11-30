@@ -31,7 +31,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     
     private lazy var emojiBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .backgroundDay
+        view.backgroundColor = .lightWhiteYP
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
