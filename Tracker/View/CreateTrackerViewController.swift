@@ -19,7 +19,7 @@ class CreateTrackerViewController: UIViewController {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 16
         button.backgroundColor = .blackDay
-        button.setTitle("Привычка", for: .normal)
+        button.setTitle(LocalizedStrings.habit, for: .normal)
         button.setTitleColor(.whiteDay, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(habitButtonTapped), for: .touchUpInside)
@@ -33,7 +33,7 @@ class CreateTrackerViewController: UIViewController {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 16
         button.backgroundColor = .blackDay
-        button.setTitle("Нерегулярное событие", for: .normal)
+        button.setTitle(LocalizedStrings.newIrregularEvent, for: .normal)
         button.setTitleColor(.whiteDay, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         button.addTarget(self, action: #selector(irregularEventButtonTapped), for: .touchUpInside)
@@ -44,7 +44,7 @@ class CreateTrackerViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         setupUI()
     }
     
@@ -72,11 +72,10 @@ class CreateTrackerViewController: UIViewController {
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        title = "Создание трекера"
+        title = LocalizedStrings.creatingNewTracker
     }
     
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             
             habitButton.heightAnchor.constraint(equalToConstant: 60),

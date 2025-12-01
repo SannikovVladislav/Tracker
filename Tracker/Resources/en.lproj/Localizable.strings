@@ -1,0 +1,92 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Владислав on 23.11.2025.
+  
+*/
+// Main
+"trackers" = "Trackers";
+"new_tracker" = "Сreating a tracker";
+"new_habit" = "New Habit";
+"new_irregular_event" = "New Irregular Event";
+"edit_tracker" = "Edit Tracker";
+"delete_tracker" = "Delete Tracker";
+"cancel" = "Cancel";
+"create" = "Create";
+"done" = "Done";
+"confirmDelete" = "Are you sure you want to delete the tracker?";
+"filters" = "Filters";
+
+// Categories
+"habit" = "Habit";
+"irregular_event" = "Irregular Event";
+"no_trackers" = "What will we track?";
+"no_search_results" = "Nothing found";
+"search" = "Search";
+
+// Tracker properties
+"tracker_placeholder_name" = "Enter the name of the tracker";
+"category" = "Category";
+"schedule" = "Schedule";
+"emoji" = "Emoji";
+"color" = "Color";
+"every_day" = "Every day";
+"weekdays" = "Weekdays";
+"weekend" = "Weekend";
+
+//Categories properties
+"category_placeholder" = "Habits and events can be\ngrouped by meaning";
+"add_category" = "Add category";
+"category_textField_placeholder" = "Enter the category name";
+"editing_category" = "Editing the category";
+"new_category" = "New category";
+
+// Days of week (full names)
+"sunday_full" = "Sunday";
+"monday_full" = "Monday";
+"tuesday_full" = "Tuesday";
+"wednesday_full" = "Wednesday";
+"thursday_full" = "Thursday";
+"friday_full" = "Friday";
+"saturday_full" = "Saturday";
+
+// Days of week (short names)
+"sunday_short" = "Sun";
+"monday_short" = "Mon";
+"tuesday_short" = "Tue";
+"wednesday_short" = "Wed";
+"thursday_short" = "Thu";
+"friday_short" = "Fri";
+"saturday_short" = "Sat";
+
+// Statistics
+"statistics" = "Statistics"; //done
+"completed_trackers" = "Trackers completed";
+"statistics_placeholder" = "There is nothing to analyze yet";
+"best_streak" = "Best streak";
+"perfect_weeks" = "Perfect weeks";
+"average_value" = "Average value";
+
+// Actions
+"complete" = "Complete";
+"undo_complete" = "Undo completion";
+"delete" = "Delete";
+"edit" = "Edit";
+
+// Errors
+"error" = "Error";
+"delete_category_confirmation" = "Is this category definitely not needed?";
+
+// Navigation
+"delete_all" = "Delete All";
+
+//Edit screen
+"edit_screen_title" = "Editing a habit";
+"save" = "Save";
+
+//Filters screen
+"all_trackers" = "All trackers";
+"trackers_today" = "Trackers for today";
+"completed" = "Completed";
+"incomplete" = "Incomplete";

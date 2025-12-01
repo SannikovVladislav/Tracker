@@ -31,7 +31,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     
     private lazy var emojiBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .backgroundDay
+        view.backgroundColor = .lightWhiteYP
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -136,6 +136,8 @@ class TrackerCollectionViewCell: UICollectionViewCell {
     
     func configure(with tracker: Tracker, completedDays: Int, isCompletedToday: Bool, currentDate: Date) {
         
+        let dayCountFormat = String.localizedStringWithFormat(NSLocalizedString("dayCounter", comment: "Number of days complected"), completedDays)
+        
         self.tracker = tracker
         self.trackerId = tracker.id
         self.currentDate = currentDate
@@ -143,7 +145,7 @@ class TrackerCollectionViewCell: UICollectionViewCell {
         
         emojiLabel.text = tracker.emoji
         nameLabel.text = tracker.name
-        dayCounterLabel.text = "\(completedDays) дней"
+        dayCounterLabel.text = "\(dayCountFormat)"
         cardView.backgroundColor = tracker.color
         updateButtonAppearance(trackerColor: tracker.color)
     }

@@ -52,6 +52,15 @@ final class EmojiCollectionView: UIView {
             collectionView.heightAnchor.constraint(equalToConstant: 204)
         ])
     }
+    
+    func selectEmoji(_ emoji: String) {
+            if let index = self.emoji.firstIndex(of: emoji) {
+                let indexPath = IndexPath(item: index, section: 0)
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredVertically)
+                
+                delegate?.didSelectEmoji(emoji)
+            }
+        }
 }
 
 extension EmojiCollectionView: UICollectionViewDataSource {

@@ -16,17 +16,7 @@ final class CategoryViewController: UIViewController {
     weak var createDelegate: CreateCategoryControllerDelegate?
     weak var editDelegate: EditCategoryControllerDelegate?
     var selectedCategory: String?
-    
-    private var viewModel: CategoryViewModel
-    
-    init(viewModel: CategoryViewModel){
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let viewModel = CategoryViewModel()
     
     private lazy var placeholderImageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,7 +27,7 @@ final class CategoryViewController: UIViewController {
     
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "Привычки и события можно\nобъединить по смыслу"
+        label.text = LocalizedStrings.categoryPlaceholder
         label.numberOfLines = 2
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
@@ -72,7 +62,7 @@ final class CategoryViewController: UIViewController {
         let button = UIButton(type: .system)
         button.layer.cornerRadius = 16
         button.backgroundColor = .blackDay
-        button.setTitle("Добавить категорию", for: .normal)
+        button.setTitle(LocalizedStrings.addCategory, for: .normal)
         button.setTitleColor(.whiteDay, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
@@ -97,7 +87,7 @@ final class CategoryViewController: UIViewController {
     
     private func configureView() {
         view.backgroundColor = .whiteDay
-        title = "Категория"
+        title = LocalizedStrings.category
     }
     
     private func setupUI() {
@@ -115,10 +105,10 @@ final class CategoryViewController: UIViewController {
         NSLayoutConstraint.activate([
             placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
             placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
-
+            
             placeholderStack.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             placeholderStack.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-
+            
             categoryTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             categoryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             categoryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -193,11 +183,9 @@ extension CategoryViewController: UITableViewDataSource {
         cell.layer.maskedCorners = corners
         cell.layer.cornerRadius = !corners.isEmpty ? 16 : 0
         cell.layer.masksToBounds = !corners.isEmpty
-        cell.backgroundColor = .lightGrayYP
+        cell.backgroundColor = .lightGrayE6
     }
-    
 }
-
 
 extension CategoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -226,10 +214,10 @@ extension CategoryViewController: UITableViewDelegate {
     private func createContextMenu(for indexPath: IndexPath) -> UIMenu {
         let category = viewModel.categories[indexPath.row]
         let editAction = UIAction(
-            title: "Редактировать") { [weak self] _ in
+            title: LocalizedStrings.edit) { [weak self] _ in
                 self?.navigateToEditCategory(category, at: indexPath)}
         let deleteAction = UIAction(
-            title: "Удалить", attributes: .destructive) { [weak self] _ in
+            title: LocalizedStrings.delete, attributes: .destructive) { [weak self] _ in
                 self?.deleteCategory(category, at: indexPath)}
         return UIMenu(children: [editAction, deleteAction])
     }
@@ -246,20 +234,19 @@ extension CategoryViewController: UITableViewDelegate {
     private func deleteCategory(_ category: TrackerCategory, at indexPath: IndexPath) {
         let alertController = UIAlertController(
             title: nil,
-            message: "Эта категория точно не нужна?",
+            message: LocalizedStrings.deleteCategoryConfirmation,
             preferredStyle: .actionSheet
         )
-        
-        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+        let deleteAction = UIAlertAction(title: LocalizedStrings.delete, style: .destructive) { [weak self] _ in
             self?.viewModel.deleteCategory(at: indexPath.row)
             
             if self?.selectedCategory == category.title {
                 self?.selectedCategory = nil
             }
+            
             self?.categoryTableView.reloadData()
         }
-        
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let cancelAction = UIAlertAction(title: LocalizedStrings.cancel, style: .cancel)
         
         alertController.addAction(deleteAction)
         alertController.addAction(cancelAction)
