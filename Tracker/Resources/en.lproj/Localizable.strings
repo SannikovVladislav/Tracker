@@ -6,7 +6,7 @@
   
 */
 // Main
-"trackers" = "Trackers"; //d
+"trackers" = "Trackers";
 "new_tracker" = "Сreating a tracker";
 "new_habit" = "New Habit";
 "new_irregular_event" = "New Irregular Event";

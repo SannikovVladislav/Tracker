@@ -7,7 +7,7 @@
 import Foundation
 import AppMetricaCore
 
-class AnalyticsService {
+final class AnalyticsService {
     
     static func activate() {
         guard let configuration = AppMetricaConfiguration(apiKey: "6749f4bb-6ba5-46ab-89c3-ca06bc361548") else { return }
