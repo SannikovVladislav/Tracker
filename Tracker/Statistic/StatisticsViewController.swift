@@ -53,7 +53,6 @@ final class StatisticsViewController: UIViewController {
         label.textColor = .blackDay
         label.text = "0"
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -63,7 +62,6 @@ final class StatisticsViewController: UIViewController {
         label.textColor = .blackDay
         label.text = LocalizedStrings.completedTrackers
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -71,7 +69,6 @@ final class StatisticsViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(resource: .noFoundStatistics)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         return imageView
     }()
     
@@ -81,7 +78,6 @@ final class StatisticsViewController: UIViewController {
         label.textColor = .blackDay
         label.text = LocalizedStrings.statisticsPlaceholder
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -91,34 +87,29 @@ final class StatisticsViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
-        setupConstraints()
         setupGradientBorder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            loadStatistics()
-        }
-        
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            updateGradientFrame()
-        }
+        super.viewWillAppear(animated)
+        loadStatistics()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateGradientFrame()
+    }
     
     private func setupUI() {
         configureView()
         addSubviews()
         setupConstraints()
-        
     }
     
     private func configureView() {
@@ -127,7 +118,7 @@ final class StatisticsViewController: UIViewController {
         updateUI()
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(gradientBorderView)
         [statisticsLabel, statisticsCardView, placeholderStack].forEach { view.addSubview($0) }
         statisticsCardView.addSubview(statisticsValueLabel)
@@ -166,40 +157,36 @@ final class StatisticsViewController: UIViewController {
         ])
     }
     
-    
     private func setupGradientBorder() {
-            // Добавляем градиентную view под карточкой
-            view.insertSubview(gradientBorderView, belowSubview: statisticsCardView)
-            
-            NSLayoutConstraint.activate([
-                gradientBorderView.topAnchor.constraint(equalTo: statisticsCardView.topAnchor, constant: -1),
-                gradientBorderView.leadingAnchor.constraint(equalTo: statisticsCardView.leadingAnchor, constant: -1),
-                gradientBorderView.trailingAnchor.constraint(equalTo: statisticsCardView.trailingAnchor, constant: 1),
-                gradientBorderView.bottomAnchor.constraint(equalTo: statisticsCardView.bottomAnchor, constant: 1)
-            ])
-            
-            // Создаем и настраиваем градиентный слой
-            let gradient = CAGradientLayer()
-            gradient.colors = [
-                UIColor.color1.cgColor,
-                UIColor.color9.cgColor,
-                UIColor.color3.cgColor
-            ]
-            gradient.startPoint = CGPoint(x: 0, y: 0.5)
-            gradient.endPoint = CGPoint(x: 1, y: 0.5)
-            gradient.cornerRadius = 17
-            gradient.name = "borderGradient"
-            
-            gradientBorderView.layer.addSublayer(gradient)
+        view.insertSubview(gradientBorderView, belowSubview: statisticsCardView)
+        
+        NSLayoutConstraint.activate([
+            gradientBorderView.topAnchor.constraint(equalTo: statisticsCardView.topAnchor, constant: -1),
+            gradientBorderView.leadingAnchor.constraint(equalTo: statisticsCardView.leadingAnchor, constant: -1),
+            gradientBorderView.trailingAnchor.constraint(equalTo: statisticsCardView.trailingAnchor, constant: 1),
+            gradientBorderView.bottomAnchor.constraint(equalTo: statisticsCardView.bottomAnchor, constant: 1)
+        ])
+        
+        let gradient = CAGradientLayer()
+        gradient.colors = [
+            UIColor.color1.cgColor,
+            UIColor.color9.cgColor,
+            UIColor.color3.cgColor
+        ]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradient.cornerRadius = 17
+        gradient.name = "borderGradient"
+        
+        gradientBorderView.layer.addSublayer(gradient)
     }
-       
-       private func updateGradientFrame() {
-           // Обновляем frame градиентного слоя при изменении layout
-           if let gradientLayer = gradientBorderView.layer.sublayers?
-               .first(where: { $0.name == "borderGradient" }) as? CAGradientLayer {
-               gradientLayer.frame = gradientBorderView.bounds
-           }
-       }
+    
+    private func updateGradientFrame() {
+        if let gradientLayer = gradientBorderView.layer.sublayers?
+            .first(where: { $0.name == "borderGradient" }) as? CAGradientLayer {
+            gradientLayer.frame = gradientBorderView.bounds
+        }
+    }
     
     private func loadStatistics() {
         do {
